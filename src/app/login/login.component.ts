@@ -10,8 +10,6 @@ import {UserCredential, User} from "../services/users.interface";
 })
 export class LoginComponent implements OnInit {
 
-    private _onConnected: EventEmitter<User> = new EventEmitter();
-
     private credential: UserCredential = new UserCredential();
     private error: string;
 
@@ -30,7 +28,7 @@ export class LoginComponent implements OnInit {
      *
      * @param user
      */
-    login(user: User) {
+    login() {
 
         this.error = "";
 

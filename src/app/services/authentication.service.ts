@@ -1,13 +1,16 @@
 import {Injectable, EventEmitter} from '@angular/core';
 import {User} from "./users.interface";
 import {UsersService} from "./users.service";
+import {Http} from "@angular/http";
 
 @Injectable()
 export class AuthenticationService {
 
     private _onConnexionChange: EventEmitter<boolean> = new EventEmitter();
 
-    constructor(private usersService: UsersService) { }
+    constructor(private usersService: UsersService, private http: Http) {
+
+    }
 
     /**
      *
@@ -15,32 +18,36 @@ export class AuthenticationService {
      * @param password
      * @returns {boolean}
      */
+
+
     public authenticate(email: string, password: string): Promise<boolean> {
 
         console.log("authenticate user by email", email, "password", password);
 
-        return this.usersService
-            .get(email)
-
+        return this
+            .http
+            .post('/api/users/authenticate', { email: email, password: password })
+            .toPromise()
+            .then(response => response.json())
             .then(user => {
-
-                if (user && user.password === password) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    this._onConnexionChange.emit(true);
-                    return true;
-                }
-                this._onConnexionChange.emit(false);
-                return false;
+                this._onConnexionChange.emit(true);
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                return user;
             });
 
     }
 
     public logout(): Promise<any> {
 
-        localStorage.removeItem('currentUser');
-        this._onConnexionChange.emit(false);
+        return this.http
+            .patch(`/api/users/${this.user.email}/offline`, {})
+            .toPromise()
+            .then(response => response.json())
+            .then(() => {
+                localStorage.removeItem('currentUser');
+                this._onConnexionChange.emit(false);
+            });
 
-        return Promise.resolve();
     }
 
     /**
