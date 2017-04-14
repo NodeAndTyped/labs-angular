@@ -20,23 +20,25 @@ export class SignUpComponent implements OnInit {
 
     ngOnInit() { }
 
-    /**
-     *
-     */
     signup() {
-
-        this.error = "";
 
         this.userService
             .exists(this.user.email)
-            .then((exists) => {
+            .then(exists => {
+
+
                 if (!exists) {
-                    this.userService.create(this.user);
-                } else {
-                    this.error = "L'utilisateur existe déjà !";
+                    return this.userService
+                        .create(this.user)
+                        .then(user => this.router.navigate(['/login']));
                 }
+
+                this.error = "L'utilisateur existe déjà !";
+
+                console.log(this.error);
+
             })
-            .then(() => this.router.navigate(['']))
+
             .catch(err => {
                 console.error(err);
             });
