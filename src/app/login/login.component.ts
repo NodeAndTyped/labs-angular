@@ -24,19 +24,22 @@ export class LoginComponent implements OnInit {
 
     }
 
-    login(user: User) {
+    login() {
 
         this.error = "";
 
-        const authenticated = this
-            .authenticationService
-            .authenticate(this.credential.email, this.credential.password);
+        this.authenticationService
+            .authenticate(this.credential.email, this.credential.password)
+            .then(user => {
+                this.router.navigate(['']);
+            })
+            .catch(err => {
 
-        if (authenticated) {
-            this.router.navigate(['']);
-        } else {
-            this.error = "Mot de passe ou e-mail incorrect."
-        }
+                console.log(err);
+
+                this.error = err._body;
+
+            });
     }
 
 }
