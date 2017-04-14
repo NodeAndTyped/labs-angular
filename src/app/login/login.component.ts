@@ -1,8 +1,7 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {AuthenticationService} from "../authentication.service";
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
-import {UserCredential, User} from "../models/user";
-import {Http} from "@angular/http";
+import {UserCredential, User} from "../services/users.interface";
 
 @Component({
     selector: 'app-login',
@@ -18,8 +17,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService,
-        private http:Http
+        private authenticationService: AuthenticationService
     ) {
 
     }
