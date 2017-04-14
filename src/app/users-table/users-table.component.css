@@ -1,0 +1,38 @@
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table {
+    width: 100%;
+    display: table;
+}
+
+thead {
+    border-bottom: 1px solid #d0d0d0;
+}
+
+th {
+    padding: 15px 5px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+
+table > tbody > tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+table .online {
+    color: green;
+}
+
+table .busy {
+    color: orange;
+}
+
+table .offline {
+    color: red;
+}

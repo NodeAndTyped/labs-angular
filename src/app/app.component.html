@@ -4,9 +4,9 @@
 </h1>
 
 <div class="container">
-    <user-table (clickUser)="onClickUser($event)">
+    <app-users-table [users]="users" (clickUser)="onClickUser($event)">
 
-    </user-table>
+    </app-users-table>
 </div>
 
 

@@ -14,3 +14,7 @@ export class User {
     lastName: string;
     status: Status;
 }
+
+export interface IUsersService {
+    getUsers(): Promise<User[]>;
+}
