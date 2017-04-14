@@ -7,7 +7,20 @@ export class UsersService implements IUsersService {
     constructor() { }
 
 
+    create(user: User): Promise<User> {
+        return null;
+    }
+
+    exists(email: string): Promise<boolean> {
+        return null;
+    }
+
     getUsers(): Promise<User[]> {
+        return null;
+    }
+
+
+    get(email: string): Promise<User> {
         return null;
     }
 }

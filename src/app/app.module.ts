@@ -12,8 +12,7 @@ import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {ROUTES} from "./app.routes";
-import {AuthenticationService} from "./authentication.service";
-import { DialogUserComponent } from './dialog-user/dialog-user.component';
+import {AuthenticationService} from "./services/authentication.service";
 import {RouterModule} from "@angular/router";
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersTableComponent } from './users-table/users-table.component';
@@ -27,11 +26,11 @@ import {FakeUsersService} from "./services/users.fake.service";
         AppComponent,
         UsersTableComponent,
         UserDialogComponent,
-        UsersOnlinePipe
+        UsersOnlinePipe,
         HomeComponent,
         LoginComponent,
         SignUpComponent,
-        DialogUserComponent,
+        UserDialogComponent,
         NavbarComponent
 
     ],

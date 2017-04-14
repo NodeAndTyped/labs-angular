@@ -6,10 +6,13 @@ export const Status: {[K in string]: K} = {
 
 export type Status = keyof typeof Status;
 
-export class User {
-    id: number;
+export class UserCredential {
     email: string;
-    password?: string;
+    password: string;
+}
+
+export class User extends UserCredential {
+    id: number;
     firstName: string;
     lastName: string;
     status: Status;
@@ -17,4 +20,7 @@ export class User {
 
 export interface IUsersService {
     getUsers(): Promise<User[]>;
+    create(user: User): Promise<User>;
+    exists(email: string): Promise<boolean>;
+    get(email: string): Promise<User>;
 }

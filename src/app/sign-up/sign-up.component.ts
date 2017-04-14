@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Status, User} from "../models/user";
-import {UserService} from "../user.service";
 import {Router} from "@angular/router";
+import {UsersService} from "../services/users.service";
+import {User, Status} from "../services/users.interface";
 
 @Component({
     selector: 'app-sign-up',
@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private userService:UserService
+        private userService: UsersService
     ) { }
 
     ngOnInit() { }
@@ -27,14 +27,20 @@ export class SignUpComponent implements OnInit {
 
         this.error = "";
 
-        const foundUser: User = this.userService.find(this.user.email);
-        if(foundUser != null) {
-            this.error = "L'utilisateur existe déjà !";
-        } else {
-            this.error = null;
-            this.userService.create({... this.user, "status" : Status.offline });
-            this.router.navigate(['']);
-        }
+        this.userService
+            .exists(this.user.email)
+            .then((exists) => {
+                if (!exists) {
+                    this.userService.create(this.user);
+                } else {
+                    this.error = "L'utilisateur existe déjà !";
+                }
+            })
+            .then(() => this.router.navigate(['']))
+            .catch(err => {
+                console.error(err);
+            });
+
     }
 
 }

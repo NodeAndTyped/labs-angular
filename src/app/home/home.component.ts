@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../models/user";
-import {Router} from "@angular/router";
 import {MdDialog} from "@angular/material";
-import {DialogUserComponent} from "../dialog-user/dialog-user.component";
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication.service";
+import {UsersService} from "../services/users.service";
+import {UserDialogComponent} from "../user-dialog/user-dialog.component";
+import {User} from "../services/users.interface";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-home',
@@ -11,39 +12,49 @@ import {AuthenticationService} from "../authentication.service";
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+    private users: User[];
+    private subscription: Subscription;
+    private isConnected: boolean;
     private currentUser: User;
-    private subscriptionLogout;
 
     constructor(
         public dialog: MdDialog,
+        private userService: UsersService,
         public authService: AuthenticationService
     ) {
-        this.currentUser = this.authService.getUser();
-        this.subscriptionLogout = this.authService.onLogout.subscribe(this.onLogout);
+
+        this.updateUserState();
+
+        this.subscription = this.authService.onConnectionChange.subscribe(isConnected => this.updateUserState());
 
     }
 
-    ngOnInit() {
-
+    private updateUserState() {
+        this.isConnected = this.authService.isConnected();
+        this.currentUser = this.authService.user;
     }
 
-    /**
-     *
-     * @param b
-     */
-    private onLogout = (b: boolean) => {
-        this.currentUser = undefined;
-    };
+    ngOnInit(): void {
+
+        this.userService.getUsers().then(users => {
+            console.log("Users =>", users);
+            this.users = users;
+        });
+
+    }
 
     private onClickUser(user: User) {
 
-        const dialogRef = this.dialog.open<DialogUserComponent>(DialogUserComponent);
+        console.log("Show user dialog =>", user);
+
+        const dialogRef = this.dialog.open(UserDialogComponent);
 
         dialogRef.componentInstance.user = user;
 
     }
 
     ngOnDestroy() {
-        this.subscriptionLogout.unsubscribe();
+        this.subscription.unsubscribe();
     }
 }
