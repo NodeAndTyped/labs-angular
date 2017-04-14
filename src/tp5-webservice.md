@@ -28,7 +28,7 @@ Pour nous simplifier la vie nous allons rajouter des commandes npm dans le `pack
 
 ```json
 {
-  "script": {
+  "scripts": {
       "start": "npm install && concurrently \"npm run start:server\" \"npm run start:app\"",
       "start:app": "ng serve --proxy-config proxy.conf.json",
       "start:server": "node server.js"
@@ -97,7 +97,9 @@ Ensuite vous pouvez intégrer tous les autres services sauf la suppression (en b
  Vous pouvez directement transformer l'objet Observable retourner par Http en Promise comme suivant :
  
 ```typescript
-http.get(`/api/users`).toPromise() => Promise 
+import 'rxjs/add/operator/toPromise';
+
+http.get(`/api/users`).toPromise(); // => Promise 
 ```
 
 > Correction du TP : #resources-tp5-solution

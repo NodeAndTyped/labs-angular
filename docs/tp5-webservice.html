@@ -123,7 +123,7 @@ new labsAngularBackend.Server().start().catch(er => console.error(er));
 </code></pre>
 <p>Pour nous simplifier la vie nous allons rajouter des commandes npm dans le <code>package.json :</code></p>
 <pre><code class="json">{
-  "script": {
+  "scripts": {
       "start": "npm install &#x26;&#x26; concurrently \"npm run start:server\" \"npm run start:app\"",
       "start:app": "ng serve --proxy-config proxy.conf.json",
       "start:server": "node server.js"
@@ -181,7 +181,9 @@ ces services dans votre application.</p>
 Ensuite vous pouvez intégrer tous les autres services sauf la suppression (en bonus).</p>
 <p><strong>Note :</strong> Dans ce TP, vous n'avez pas pour obligation d'utiliser l'API reactive avec le module Http.
 Vous pouvez directement transformer l'objet Observable retourner par Http en Promise comme suivant :</p>
-<pre><code class="typescript">http.get(`/api/users`).toPromise() => Promise 
+<pre><code class="typescript">import 'rxjs/add/operator/toPromise';
+
+http.get(`/api/users`).toPromise(); // => Promise 
 </code></pre>
 <blockquote>
 <p>Correction du TP : <a href="resources/tp5-solution.zip">tp5-solution</a></p>
