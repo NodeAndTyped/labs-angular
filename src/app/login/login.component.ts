@@ -24,10 +24,6 @@ export class LoginComponent implements OnInit {
 
     }
 
-    /**
-     *
-     * @param user
-     */
     login() {
 
         this.error = "";
