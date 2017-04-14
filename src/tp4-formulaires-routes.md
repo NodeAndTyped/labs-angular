@@ -75,19 +75,28 @@ Voici un exemple du formulaire attendu en Material :
 ### Le service Authenticate
 
 Une fois le formulaire réalisé, vous devrez créer le service `AuthenticateService` (`ng g service authenticate`) qui aura pour fonction d'authentifier
-l'utilisateur. 
+l'utilisateur.
 
 Ce service exposera les méthodes suivantes :
 
 Method | Descripton
 ---|---
-`authenticate(email: string, password: string): boolean` | Permet d'authentifier l'utilisateur. Stocke l'utilisateur dans le localStorage et émet un événement sur le flux `onSignin`.
-`logout()` | Supprimer les infos stocker dans le localStorage et émet un événement sur le flux onLogout.
+`authenticate(email: string, password: string): boolean` | Permet d'authentifier l'utilisateur. Stocke l'utilisateur dans le `localStorage` et émet un événement sur le flux `onSignin`.
+`logout()` | Supprimer les infos stocker dans le `localStorage` et émet un événement sur le flux onLogout.
 `getUser()` | Retourne l'utilisateur connecté et stocké dans le localStorage.
 `get onSignin(): EventEmitter<User>` | Retourne l'objet (ou flux) `EventEmmiter` dédié à l'événement onSignin.
 `get onLogout(): EventEmitter<boolean>` | Retourne l'objet (ou flux) `EventEmmiter` dédié à l'événement onLogout.
 
 > Nous utiliserons la class EventEmitter pour permettre à des composants de s'abonner à des événements.
+
+#### Utilisation du localStorage
+
+```typescript
+// setter
+localStorage.setItem("currentUsers", JSON.stringify({firstName: "John"}));
+// getter
+const user = JSON.parse(localStorage.getItem("currentUsers"));
+```
 
 ### La page d'accueil (fin)
 
