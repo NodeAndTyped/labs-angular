@@ -124,6 +124,8 @@ Cette navbar devra s'afficher sur l'ensemble des pages. Elle devra afficher les 
 * Signin lorsque aucun utilisateur n'est authentifié,
 * Signout lorsqu'un utilisateur est authentifié.
 
+Pour vous aider, vous pouvez utiliser la librairie Material [http://material.angular.io](http://material.angular.io).
+
 > Correction du TP : #resources-tp4-solution
 
 [Suivant](tp5-webservice.md)
