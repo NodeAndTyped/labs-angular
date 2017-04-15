@@ -1,7 +1,7 @@
 <div>
     <div *ngIf="isConnected">
         <h1>Bonjour {{currentUser?.firstName}} {{currentUser?.lastName}}!</h1>
-        <app-users-table [users]="users"(clickUser)="onClickUser($event)">
+        <app-users-table [users]="users | async" (clickUser)="onClickUser($event)">
 
         </app-users-table>
     </div>

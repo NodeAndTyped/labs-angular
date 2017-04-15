@@ -4,7 +4,8 @@ import {AuthenticationService} from "../services/authentication.service";
 import {UsersService} from "../services/users.service";
 import {UserDialogComponent} from "../user-dialog/user-dialog.component";
 import {User} from "../services/users.interface";
-import {Subscription} from "rxjs";
+import {Subscription, Observable} from "rxjs";
+import {UsersSocketService} from "../services/users-socket.service";
 
 @Component({
     selector: 'app-home',
@@ -13,15 +14,16 @@ import {Subscription} from "rxjs";
 })
 export class HomeComponent implements OnInit {
 
-    private users: User[];
+    private users: Observable<User[]>;
     private subscription: Subscription;
     private isConnected: boolean;
     private currentUser: User;
 
     constructor(
-        public dialog: MdDialog,
+        private dialog: MdDialog,
         private userService: UsersService,
-        public authService: AuthenticationService
+        private authService: AuthenticationService,
+        private usersSocketService: UsersSocketService
     ) {
 
         this.updateUserState();
@@ -37,10 +39,13 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.userService.getUsers().then(users => {
-            console.log("Users =>", users);
-            this.users = users;
-        });
+        const source1 = this.userService.getObservableUsers();
+        const source2 = this.usersSocketService.getUsers();
+
+        this.users = Observable.merge(
+            source1,
+            source2
+        );
 
     }
 

@@ -6,9 +6,11 @@ import {User, Status} from "../services/users.interface";
 })
 export class UsersOnlinePipe implements PipeTransform {
 
-    transform(users: User[] = [], showOnline: boolean = true): any {
+    transform(users: User[], showOnline: boolean = true): any {
 
-        return users.filter(user =>
+        console.log("Pipe =>", users);
+
+        return (users || []).filter(user =>
             showOnline ? (user.status === Status.busy || user.status === Status.online) : true
         );
 
