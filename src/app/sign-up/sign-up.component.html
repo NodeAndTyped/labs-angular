@@ -80,14 +80,14 @@
                        required />
 
                 <md-error *ngIf="password.hasError('required')">
-                    Veuillez saisir un e-mail.
-                </md-error>
-
-                <md-error *ngIf="error">
-                    {{error}}
+                    Veuillez saisir un mot de passe.
                 </md-error>
 
             </md-input-container>
+
+            <md-error *ngIf="error">
+                {{error}}
+            </md-error>
 
             <br />
             <br />
