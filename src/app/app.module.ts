@@ -44,7 +44,7 @@ import {FakeUsersService} from "./services/users.fake.service";
         RouterModule.forRoot(ROUTES)
     ],
     providers: [
-        {provide: UsersService, useClass: FakeUsersService},
+        {provide: UsersService, useClass: UsersService},
         {provide: AuthenticationService, useClass: AuthenticationService}
     ],
     bootstrap: [AppComponent],
