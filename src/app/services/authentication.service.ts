@@ -22,7 +22,7 @@ export class AuthenticationService {
         return this.usersService
             .get(email)
 
-            .then(user => {
+            .then<any>(user => {
 
                 if (user && user.password === password) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
@@ -30,7 +30,7 @@ export class AuthenticationService {
                     return true;
                 }
                 this._onConnexionChange.emit(false);
-                return false;
+                return Promise.reject({_body: "e-mail ou mot de passe incorrect"});
             });
 
     }
