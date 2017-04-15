@@ -12,8 +12,15 @@ export class UserCredential {
 }
 
 export class User extends UserCredential {
-    _id: string;
+    id: number;
     firstName: string;
     lastName: string;
     status: Status;
+}
+
+export interface IUsersService {
+    getUsers(): Promise<User[]>;
+    create(user: User): Promise<User>;
+    exists(email: string): Promise<boolean>;
+    get(email: string): Promise<User>;
 }

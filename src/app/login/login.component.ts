@@ -1,8 +1,7 @@
-import {Component, EventEmitter, OnInit} from '@angular/core';
-import {AuthenticationService} from "../authentication.service";
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "../services/authentication.service";
 import {Router} from "@angular/router";
-import {UserCredential, User} from "../models/user";
-import {Http} from "@angular/http";
+import {UserCredential, User} from "../services/users.interface";
 
 @Component({
     selector: 'app-login',
@@ -11,15 +10,12 @@ import {Http} from "@angular/http";
 })
 export class LoginComponent implements OnInit {
 
-    private _onConnected: EventEmitter<User> = new EventEmitter();
-
     private credential: UserCredential = new UserCredential();
     private error: string;
 
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService,
-        private http:Http
+        private authenticationService: AuthenticationService
     ) {
 
     }
@@ -28,11 +24,7 @@ export class LoginComponent implements OnInit {
 
     }
 
-    /**
-     *
-     * @param user
-     */
-    login(user: User) {
+    login() {
 
         this.error = "";
 

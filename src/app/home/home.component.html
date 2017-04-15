@@ -1,12 +1,12 @@
 <div>
-    <div *ngIf="currentUser">
-        <h1>Bonjour {{currentUser.firstName}} {{currentUser.lastName}}!</h1>
-        <user-table (clickUser)="onClickUser($event)">
+    <div *ngIf="isConnected">
+        <h1>Bonjour {{currentUser?.firstName}} {{currentUser?.lastName}}!</h1>
+        <app-users-table [users]="users"(clickUser)="onClickUser($event)">
 
-        </user-table>
+        </app-users-table>
     </div>
 
-    <div *ngIf="!currentUser">
+    <div *ngIf="!isConnected">
 
         <h1>Bienvenue</h1>
 

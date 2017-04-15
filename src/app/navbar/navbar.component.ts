@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {User} from "../models/user";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication.service";
+import {User} from "../services/users.interface";
 
 @Component({
     selector: 'app-navbar',
@@ -10,7 +10,7 @@ import {AuthenticationService} from "../authentication.service";
 })
 export class NavbarComponent implements OnInit {
 
-    private currentUser: User;
+    private isConnected: boolean;
     /**
      *
      */
@@ -19,21 +19,18 @@ export class NavbarComponent implements OnInit {
     /**
      *
      */
-    private subscriptionSignin;
-    /**
-     *
-     */
-    private subscriptionLogout;
+    private subscription;
 
     constructor(
         private router: Router,
         public authService: AuthenticationService
     ) {
-        this.currentUser = this.authService.getUser();
-        console.log("check logged authenticated user", this.currentUser);
 
-        this.subscriptionSignin = this.authService.onSignin.subscribe(this.onSignin);
-        this.subscriptionLogout = this.authService.onLogout.subscribe(this.onLogout);
+        this.subscription = this.authService.onConnectionChange.subscribe(isConnected => this.isConnected = isConnected);
+        this.isConnected = this.authService.isConnected();
+
+        console.log("check logged authenticated user", this.isConnected);
+
     }
 
     ngOnInit() {
@@ -42,28 +39,10 @@ export class NavbarComponent implements OnInit {
 
     /**
      *
-     * @param user
-     */
-    private onSignin = (user: User) => {
-        this.currentUser = user;
-    };
-
-    /**
-     *
-     * @param b
-     */
-    private onLogout = (b: boolean) => {
-        this.currentUser = undefined;
-        this.router.navigate(['/']);
-        console.log("Logout");
-    };
-
-    /**
-     *
      */
     private changeRoute() {
 
-        if(!this.currentUser) {
+        if(!this.isConnected) {
             this.router.navigate(['login']);
         } else {
             this.authService.logout();
@@ -71,8 +50,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.subscriptionLogout.unsubscribe();
-        this.subscriptionSignin.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
 }

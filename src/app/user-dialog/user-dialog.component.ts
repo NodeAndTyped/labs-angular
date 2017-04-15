@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {MdDialogRef} from "@angular/material";
-import {User} from "../models/user";
+import {User} from "../services/users.interface";
 
 @Component({
     selector: 'dialog-user',
-    templateUrl: './dialog-user.component.html',
-    styleUrls: ['./dialog-user.component.css']
+    templateUrl: 'user-dialog.component.html',
+    styleUrls: ['user-dialog.component.css']
 })
-export class DialogUserComponent implements OnInit {
+export class UserDialogComponent implements OnInit {
 
     public user: User;
 
     constructor(
-        public dialogRef: MdDialogRef<DialogUserComponent>
+        public dialogRef: MdDialogRef<UserDialogComponent>
     ) {
         console.log(dialogRef.componentInstance);
     }

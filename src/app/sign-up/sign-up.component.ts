@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Status, User} from "../models/user";
-import {UserService} from "../user.service";
 import {Router} from "@angular/router";
+import {UsersService} from "../services/users.service";
+import {User} from "../services/users.interface";
 
 @Component({
     selector: 'app-sign-up',
@@ -15,14 +15,11 @@ export class SignUpComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private userService:UserService
+        private userService: UsersService
     ) { }
 
     ngOnInit() { }
 
-    /**
-     *
-     */
     signup() {
 
         this.userService
