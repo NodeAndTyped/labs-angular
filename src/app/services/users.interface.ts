@@ -1,3 +1,4 @@
+import {Observable} from "rxjs";
 export const Status: {[K in string]: K} = {
     online: "online",
     offline: "offline",
@@ -20,6 +21,7 @@ export class User extends UserCredential {
 
 export interface IUsersService {
     getUsers(): Promise<User[]>;
+    getObservableUsers(): Observable<User[]>;
     create(user: User): Promise<User>;
     exists(email: string): Promise<boolean>;
     get(email: string): Promise<User>;

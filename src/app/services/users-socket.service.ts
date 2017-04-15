@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs/Observable';
-import {User} from "./models/user";
+import {User} from "./users.interface";
 
 @Injectable()
 export class UsersSocketService {
@@ -17,7 +17,7 @@ export class UsersSocketService {
      * @returns Observable<User[]>
      */
     getUsers(): Observable<User[]> {
-        let observable = new Observable(observer => {
+        const observable = new Observable(observer => {
 
             this.socket = io(window.location.origin);
 

@@ -16,7 +16,7 @@ import {ROUTES} from "./app.routes";
 import {AuthenticationService} from "./services/authentication.service";
 import {RouterModule} from "@angular/router";
 import { NavbarComponent } from './navbar/navbar.component';
-import { UsersSocketService } from "./users-socket.service";
+import { UsersSocketService } from "./services/users-socket.service";
 import { UsersTableComponent } from './users-table/users-table.component';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { UsersOnlinePipe } from './users-table/users-online.pipe';
@@ -45,7 +45,7 @@ import {FakeUsersService} from "./services/users.fake.service";
         RouterModule.forRoot(ROUTES)
     ],
     providers: [
-        {provide: UsersService, useClass: FakeUsersService},
+        {provide: UsersService, useClass: UsersService},
         {provide: AuthenticationService, useClass: AuthenticationService},
         UsersSocketService
     ],

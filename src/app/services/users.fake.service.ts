@@ -1,4 +1,5 @@
 import {IUsersService, User, Status} from "./users.interface";
+import {Observable} from "rxjs";
 
 export class FakeUsersService implements IUsersService {
 
@@ -37,6 +38,10 @@ export class FakeUsersService implements IUsersService {
 
     getUsers(): Promise<User[]> {
         return Promise.resolve(this.users);
+    }
+
+    getObservableUsers(): Observable<User[]> {
+        return Observable.of(this.users);
     }
 
     get(email: string): Promise<User> {

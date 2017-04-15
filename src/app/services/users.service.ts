@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IUsersService, User } from "./users.interface";
 import {Http} from "@angular/http";
 import "rxjs/add/operator/toPromise";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class UsersService implements IUsersService {
@@ -30,6 +31,13 @@ export class UsersService implements IUsersService {
             .toPromise();
     }
 
+
+    getObservableUsers(): Observable<User[]> {
+
+        return this.http
+            .get('api/users')
+            .map(response => response.json());
+    }
 
     get(email: string): Promise<User> {
         console.log("find user by email", email);
