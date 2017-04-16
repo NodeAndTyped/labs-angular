@@ -31,7 +31,7 @@
                 Labs Angular
             </a>
 
-            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <a href="#" data-activates="global-menu-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <ul class="right">
                 <li>
@@ -40,14 +40,14 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="https://github.com/NodeAndTyped/labs-angular/zipball/master" title="download">
+                <li class="hide-on-med-and-down">
+                    <a href="#!" class="dropdown-button" title="download" data-activates="global-menu-download" data-beloworigin="true">
                         <i class="material-icons">file_download</i>
                     </a>
                 </li>
 
                 <li class="hide-on-med-and-down">
-                    <a class="dropdown-button" href="#!" data-activates="dropdown1">
+                    <a class="dropdown-button" href="#!" data-activates="global-menu" data-beloworigin="true">
                         <i class="material-icons">menu</i>
                     </a>
                 </li>
@@ -59,7 +59,7 @@
 
 </header>
 
-<ul class="side-nav" id="mobile-demo">
+<ul class="side-nav" id="global-menu-mobile">
 
     <li class="logo">
 
@@ -82,9 +82,44 @@
         
             <li><a href="tp6-programmation-reactive-websocket.html">TP 6 - Programmation reactive et websocket</a></li>
         
+
+    <li><div class="divider"></div></li>
+
+    <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+            <li>
+                <a class="collapsible-header">Télécharger<i class="material-icons">arrow_drop_down</i></a>
+                <div class="collapsible-body">
+                    <ul>
+
+                        <li>
+                            <a href="https://github.com/NodeAndTyped/labs-angular/zipball/master">
+                                Documentation (master)
+                            </a>
+                        </li>
+
+                        
+                                <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp1-solution.zip">tp1-solution</a></li>
+                            
+                                <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp2-solution.zip">tp2-solution</a></li>
+                            
+                                <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp3-solution.zip">tp3-solution</a></li>
+                            
+                                <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp4-solution.zip">tp4-solution</a></li>
+                            
+                                <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp5-solution.zip">tp5-solution</a></li>
+                            
+                                <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp6-solution.zip">tp6-solution</a></li>
+                            
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+
 </ul>
 
-<ul id="dropdown1" class="dropdown-content">
+<ul id="global-menu" class="dropdown-menu dropdown-content">
     
             <li><a href="index.html">Accueil</a></li>
         
@@ -100,6 +135,32 @@
         
             <li><a href="tp6-programmation-reactive-websocket.html">TP 6 - Programmation reactive et websocket</a></li>
         
+</ul>
+
+
+<ul id="global-menu-download" class="dropdown-menu dropdown-content">
+    <li>
+        <a href="https://github.com/NodeAndTyped/labs-angular/zipball/master">
+            Télécharger la documentation (master)
+        </a>
+    </li>
+
+    <li class="divider"></li>
+
+    
+            <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp1-solution.zip">Télécharger tp1-solution</a></li>
+        
+            <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp2-solution.zip">Télécharger tp2-solution</a></li>
+        
+            <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp3-solution.zip">Télécharger tp3-solution</a></li>
+        
+            <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp4-solution.zip">Télécharger tp4-solution</a></li>
+        
+            <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp5-solution.zip">Télécharger tp5-solution</a></li>
+        
+            <li><a href="https://github.com/NodeAndTyped/labs-angular/archive/tp6-solution.zip">Télécharger tp6-solution</a></li>
+        
+
 </ul>
 
 <div class="container container-body">
