@@ -3,7 +3,7 @@
 
 ## Prérequis
 
-Vérifier que vous avez les éléments suivants d’installé sur votre poste :
+Vérifiez que vous avez les éléments suivants d’installés sur votre poste :
 
 * Node v6 ou plus avec la commande npm –v,
 * Git, nous l’utiliserons pour récupérer le projet initial,
