@@ -74,7 +74,7 @@
         
             <li><a href="#tp2lecomposantchronometre">TP 2 - Le composant Chronomètre</a></li>
         
-            <li><a href="#tp3creerunelistedutilisateursenligne">TP 3 - Créer une liste d&#39;utilisateurs en ligne</a></li>
+            <li><a href="#tp3communicationentrescomposants">TP 3 - Communication entres composants</a></li>
         
             <li><a href="#tp4formulairesetroutes">TP 4 - Formulaires et routes</a></li>
         
@@ -127,7 +127,7 @@
         
             <li><a href="#tp2lecomposantchronometre">TP 2 - Le composant Chronomètre</a></li>
         
-            <li><a href="#tp3creerunelistedutilisateursenligne">TP 3 - Créer une liste d&#39;utilisateurs en ligne</a></li>
+            <li><a href="#tp3communicationentrescomposants">TP 3 - Communication entres composants</a></li>
         
             <li><a href="#tp4formulairesetroutes">TP 4 - Formulaires et routes</a></li>
         
@@ -174,7 +174,7 @@
     
         <li><a href="#tp2lecomposantchronometre">TP 2 - Le composant Chronomètre</a></li>
     
-        <li><a href="#tp3creerunelistedutilisateursenligne">TP 3 - Créer une liste d&#39;utilisateurs en ligne</a></li>
+        <li><a href="#tp3communicationentrescomposants">TP 3 - Communication entres composants</a></li>
     
         <li><a href="#tp4formulairesetroutes">TP 4 - Formulaires et routes</a></li>
     
@@ -189,9 +189,11 @@
 <ul>
 <li>Mise en place de l'environnement avec <code>@angular/cli</code>,</li>
 <li>Création d'un composant chronomètre et d'un Pipe,</li>
-<li>Utilisation des services Angular pour communiquer avec le backend,</li>
+<li>Communication entres les composants d'Angular,</li>
+<li>Développer un service mocké,</li>
 <li>Création d'un formulaire de saisie,</li>
 <li>Mise en place du routage.</li>
+<li>Utilisation des services Angular pour communiquer avec le backend.</li>
 </ul>
 
 <div id="tp1installation"></div>
@@ -458,10 +460,10 @@ export class AppModule { }
 <p>Correction du TP : <a href="../../Resources/tp2-solution.zip">tp2-solution</a></p>
 </blockquote>
 
-<div id="tp3creerunelistedutilisateursenligne"></div>
+<div id="tp3communicationentrescomposants"></div>
 <h1>TP 3</h1>
 <blockquote>
-<p>Créer une liste d'utilisateurs en ligne</p>
+<p>Communication entres composants</p>
 </blockquote>
 <p>Dans ce TP, nous allons créer un tableau contenant la liste des utilisateurs
 avec leur statut en ligne. </p>
@@ -473,70 +475,110 @@ avec leur statut en ligne. </p>
 ├── app.component.ts
 └── app.module.ts
 </code></pre>
-<h2>Notre 1er Service</h2>
-<p>Dans le dossier <code>src/app</code>, créer votre 1er service sous le nom <code>UserService</code>.</p>
-<p>Pour aller plus vite, vous pouvez utiliser l'outil <code>@angular/cli</code> pour créer votre service.</p>
-<pre><code class="bash">ng g service user
+<h2>Le service Users</h2>
+<p>Nous allons créer notre 1er service. Nous allons partir de principe que l'application va évoluer dans le temps et donc nos services
+aussi. Par exemple, notre service <code>UsersService</code> va exposer un ensemble de méthode dont la liste des utilisateurs.
+Généralement ces informations sont exposés par un web service. Dans l'immédiat nous n'en avons pas, mais nous ferons tout comme !</p>
+<p>Nous allons donc créer deux classes, la première sera un <code>FakeUsersService</code> et la seconde sera un <code>UsersService</code> (notre cible).
+Ces deux classes implémenterons l'interface <code>IUsersService</code> comme suivant :</p>
+<pre><code class="typescript">export const Status: {[K in string]: K} = {
+    online: "online",
+    offline: "offline",
+    busy: "busy"
+};
+
+export type Status = keyof typeof Status;
+
+export class UserCredential {
+    email: string;
+    password: string;
+}
+
+export class User extends UserCredential {
+    id: number;
+    firstName: string;
+    lastName: string;
+    status: Status;
+}
+
+export interface IUsersService {
+    getUsers(): Promise&#x3C;User[]>;
+    create(user: User): Promise&#x3C;User>;
+    exists(email: string): Promise&#x3C;boolean>;
+    get(email: string): Promise&#x3C;User>;
+}
 </code></pre>
-<p>Genèrera les fichiers suivants :</p>
-<pre><code class="bash">src/app
-├── user.service.spec.ts
-└── user.service.ts
+<p>Commencez par créer le UsersService avec @angular/cli :</p>
+<pre><code class="bash">ng g service services/users
 </code></pre>
-<p>Ce service devra retourner la liste de tous les utilisateurs :</p>
+<p>Ensuite, créez le fichier <code>users.interface.ts</code> ainsi que la fichier <code>users.fake.service.ts</code>.
+Et enfin implémentez la méthode <code>getUsers()</code> (les autres méthodes seront développés plus tard).</p>
+<p>La méthode <code>FakeUsersService.getUsers()</code> devra retourner les données suivantes :</p>
 <pre><code class="json">[
-    {"id": 1, "email": "john.doe@gmail.com", "status": "online"},
-    {"id": 2, "email": "jane.doe@gmail.com", "status": "online"},
-    {"id": 3, "email": "jean.dupond@gmail.com", "status": "busy"},
-    {"id": 4, "email": "jean.dupont@gmail.com", "status": "offline"},
-    {"id": 5, "email": "jeanne.dupond@gmail.com", "status": "offline"},
-    {"id": 6, "email": "joe.doe@gmail.com", "status": "online"}
+    {"id": 1, "email": "john.doe@gmail.com", "password": "12345", "status": "online"},
+    {"id": 2, "email": "jane.doe@gmail.com", "password": "12345", "status": "online"},
+    {"id": 3, "email": "jean.dupond@gmail.com", "password": "12345", "status": "busy"},
+    {"id": 4, "email": "jean.dupont@gmail.com", "password": "12345", "status": "offline"},
+    {"id": 5, "email": "jeanne.dupond@gmail.com", "password": "12345", "status": "offline"},
+    {"id": 6, "email": "joe.doe@gmail.com", "password": "12345", "status": "online"}
 ]
 </code></pre>
+<p>Une fois votre service fake implémenté, n'oubliez pas de l'ajouter à la liste des providers de votre module. </p>
+<blockquote>
+<p>Aidez-vous du cours pour savoir comment ajouter un service mocké dans un module Angular.</p>
+</blockquote>
+<p>Pour terminer, appelez la méthode getUser() dans le composant AppComponent et vérifiez que cela fonctionne.</p>
 <h2>Le composant tableau des utilisateurs</h2>
-<p>Dans le dossier <code>src/app</code>, créer un dossier <code>user-table</code> qui contiendra tout le code source du composant <code>UserTableComponent</code>.</p>
-<p>Ce composant <code>UserTableComponent</code> affiche la liste des utilisateurs avec leur statut dans tableau HTML.</p>
-<p>Pour aller plus vite, vous pouvez utiliser l'outil <code>@angular/cli</code> pour créer votre composant.</p>
+<p>Nous allons maintenant créer un composant qui va afficher la liste des utilisateurs sous forme de tableau.
+Commencez par créer le composant <code>UsersTable</code> avec la commande suivante :</p>
 <pre><code class="bash">ng g component user-table
 </code></pre>
-<p>Ci-dessous le code source ajouté au projet :</p>
-<pre><code class="bash">src/app
-└── user-table
-    ├── user-table.component.css
-    ├── user-table.component.html
-    ├── user-table.component.spec.ts
-    └── user-table.component.ts
+<p>Voici ce qui est attendu du composant, nous devons pouvoir l'utiliser de la façon suivante :</p>
+<pre><code class="html">&#x3C;app-users-table [users]="users">&#x3C;/app-users-table>
 </code></pre>
-<p>Ajouter les feuilles de style à votre composant pour que :</p>
+<h3>Exercice 1</h3>
+<p>Avec ce que vous avez vue en cours sur les données d'entrées d'un composant avec <code>@Input()</code>, essayez d'afficher la liste des utilisateurs
+au format json dans le contenu du composant UsersTable dans un premier temps.</p>
+<h3>Exercice 2</h3>
+<p>Maintenant que vous avez les données construisez votre composant. Voici un exemple du tableau attendu :</p>
+<p><img src="images/users-table.png" alt="max-300"> </p>
+<p>La feuille de style pour vous aider :</p>
+<pre><code class="css">table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table {
+    width: 100%;
+    display: table;
+}
+
+thead {
+    border-bottom: 1px solid #d0d0d0;
+}
+
+th {
+    padding: 15px 5px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+</code></pre>
+<p>Vous devez donc compléter la feuille de style afin d'afficher :</p>
 <ul>
-<li>Les lignes pairs soient en fonds gris clair,</li>
-<li>Le texte <code>online</code> soit en vert,</li>
-<li>Le texte <code>offline</code> soit en gris clair,</li>
-<li>Le texte <code>busy</code> soit en rouge,</li>
-<li>L'entête du tableau soit en fonds bleu clair, avec le texte en blanc.</li>
+<li>Les lignes pairs en fonds gris clair,</li>
+<li>Le texte <code>online</code> en vert,</li>
+<li>Le texte <code>offline</code> en gris clair,</li>
+<li>Le texte <code>busy</code> en rouge.</li>
 </ul>
-<p>Le tableau possède une checkbox (md-checkbox) permettant d'afficher soit les utilisateurs en ligne,
+<p>Ensuite utilisez les intructions vue en cours pour afficher la liste des utilisateurs dans votre tableau.</p>
+<p>Enfin, ajoutez une checkbox (md-checkbox) permettant d'afficher soit les utilisateurs en ligne,
 soit tous les utilisateurs.</p>
-<h2>Composant enfant</h2>
-<p>Créer un composant <code>UserTableRowComponent</code> représentant une ligne du tableau.</p>
-<p>Pour aller plus vite, vous pouvez utiliser l'outil <code>@angular/cli</code> pour créer votre composant.</p>
-<pre><code class="bash">ng g component user-table-row
-</code></pre>
-<p>Modifier votre code pour intégrer ce composant dans le composant <code>UserTableComponent</code>.</p>
-<p>Ci-dessous le code source ajouté au projet :</p>
-<pre><code>src/app
-└── user-table-row
-    ├── user-table-row.component.css
-    ├── user-table-row.component.html
-    ├── user-table-row.component.spec.ts
-    └── user-table-row.component.ts
-</code></pre>
-<p>Le <code>UserTableRowComponent</code> devra gérer l'afficher des données de l'utilisateur ainsi que l'action de s'afficher ou se masquer
-en fonction du statut d'affichage demandé par le composant parent.</p>
 <h2>Communication entres composants</h2>
 <p>Notre tableau affiche désormais les données. Nous allons maintenant utiliser l'annotation <code>@Output</code> pour émettre
 un événement lorsque l'utilisateur clique sur le bouton correspondant à la ligne de l'utilisateur.
-Cet événement sera remonté vers le composant <code>UserTableComponent</code> qui remontera cet événement vers le composant <code>AppComponent</code>.</p>
+Cet événement sera remonté vers le composant <code>AppComponent</code>.</p>
 <p>Une fois l'information de l'utilisateur remonté dans <code>AppComponent</code>, vous devrez afficher les informations de l'utilisateur
 dans une boite de dialogue (soit via une alert ou en utilisant la librairie <a href="https://material.angular.io/components/component/dialog">Material design</a>).</p>
 <p><img src="images/user-table-and-popin.png" alt="max-300"> </p>

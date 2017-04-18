@@ -165,163 +165,140 @@
 
 <div class="container container-body">
     <article class="markdown-body">
-        <h1>TP 4</h1>
+        <h1>TP 3</h1>
 <blockquote>
-<p>Formulaires et routes</p>
+<p>Communication entres composants</p>
 </blockquote>
-<p>Dans ce TP, nous allons créer les formulaires de connexion et d'authentification.
-Pour ce faire nous aurons besoin de mettre en place la module de routage d'Angular
-pour afficher plusieurs pages.</p>
-<h2>Installation</h2>
-<p>Installez le module <code>@angular/router</code> avec la commande suivante :</p>
-<pre><code class="bash">npm install --save @angular/router
+<p>Dans ce TP, nous allons créer un tableau contenant la liste des utilisateurs
+avec leur statut en ligne. </p>
+<p>Pour rappel, la structure initiale du projet est la suivante :</p>
+<pre><code class="bash">src/app
+├── app.component.css
+├── app.component.html
+├── app.component.spec.ts
+├── app.component.ts
+└── app.module.ts
 </code></pre>
-<h2>Création des pages et des routes</h2>
-<p>Nous devons maintenant créer les composants
-Déclarez ensuite les routes dans un nouveau fichier <code>app.routes.ts</code>. Nous devrons créer les routes suivantes :</p>
-<table>
-<thead>
-<tr>
-<th>Page</th>
-<th>Route</th>
-<th>Composant</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Accueil</td>
-<td>/</td>
-<td>HomeComponent</td>
-<td>Affiche un message de bienvenue avec un bouton redirigeant l'utilisateur vers la page de connexion. Une fois authentifié, cette page affiche la liste des utilisateurs.</td>
-</tr>
-<tr>
-<td>Login</td>
-<td>/login</td>
-<td>LoginComponent</td>
-<td>Formulaire d'authentification</td>
-</tr>
-<tr>
-<td>Signup</td>
-<td>/signup</td>
-<td>SignupComponent</td>
-<td>Formulaire d'inscription</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>Commencez par créer les composants énoncés dans le tableau. </li>
-<li>Ensuite, vous devrez écrire vos routes dans le fichier <code>app.routes.ts</code> en fonction de tableau ci-dessus.</li>
-<li>Importez vos routes dans votre application <code>app.module.ts</code>comme suivant :</li>
-</ol>
-<pre><code class="typescript">import { ROUTES } from "./app.routes";
-import { RouterModule } from "@angular/router";
+<h2>Le service Users</h2>
+<p>Nous allons créer notre 1er service. Nous allons partir de principe que l'application va évoluer dans le temps et donc nos services
+aussi. Par exemple, notre service <code>UsersService</code> va exposer un ensemble de méthode dont la liste des utilisateurs.
+Généralement ces informations sont exposés par un web service. Dans l'immédiat nous n'en avons pas, mais nous ferons tout comme !</p>
+<p>Nous allons donc créer deux classes, la première sera un <code>FakeUsersService</code> et la seconde sera un <code>UsersService</code> (notre cible).
+Ces deux classes implémenterons l'interface <code>IUsersService</code> comme suivant :</p>
+<pre><code class="typescript">export const Status: {[K in string]: K} = {
+    online: "online",
+    offline: "offline",
+    busy: "busy"
+};
 
-@NgModule({
-    ...
-    imports: [
-        RouterModule.forRoot(ROUTES)
-    ],
-    ...
+export type Status = keyof typeof Status;
+
+export class UserCredential {
+    email: string;
+    password: string;
+}
+
+export class User extends UserCredential {
+    id: number;
+    firstName: string;
+    lastName: string;
+    status: Status;
+}
+
+export interface IUsersService {
+    getUsers(): Promise&#x3C;User[]>;
+    create(user: User): Promise&#x3C;User>;
+    exists(email: string): Promise&#x3C;boolean>;
+    get(email: string): Promise&#x3C;User>;
 }
 </code></pre>
-<p>Enfin vous devez indiquer au routeur où seront affichées les vues dans votre application.</p>
-<pre><code class="html">&#x3C;router-outlet>&#x3C;/router-outlet>
+<p>Commencez par créer le UsersService avec @angular/cli :</p>
+<pre><code class="bash">ng g service services/users
 </code></pre>
-<h3>Page d'accueil</h3>
-<p>La page d'accueil devra afficher la liste des utilisateurs une fois authentifié.
-Commencez par réintégrer la liste des utilisateurs dans HomeComponent. Nous nous occuperons des règles d'affichage plus tard.</p>
-<h3>Page d'authentification</h3>
-<p>Nous allons maintenant utiliser les API Formulaires d'Angular. Nous utiliserons ici les <code>formulaires pilotés par le template</code>
-mais vous êtes libre d'utiliser la seconde approche.</p>
-<p>Le formulaire de connexion présentera les éléments suivants :</p>
-<ul>
-<li>Un champ e-mail, qui est un champ obligatoire et doit respecter le pattern e-mail,</li>
-<li>Un champ mot de passe, qui est un champ obligatoire,</li>
-<li>Un bouton de connexion, actif que si toutes les données saisies sont valides,</li>
-<li>Un bouton <code>ou m'enregister</code> pour rediriger l'utilisateur vers la page d'inscription.</li>
-</ul>
-<p>N'oubliez pas d'afficher les messages en fonction du type d'erreur du champs associé.</p>
-<p>Voici un exemple du formulaire attendu en Material :</p>
-<p><img src="images/login.png" alt="max-300"> </p>
-<h3>Le service Authenticate</h3>
-<p>Une fois le formulaire réalisé, vous devrez créer le service <code>AuthenticateService</code> (<code>ng g service authenticate</code>) qui aura pour fonction d'authentifier
-l'utilisateur.</p>
-<p>Ce service exposera les méthodes suivantes :</p>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th>Descripton</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>authenticate(email: string, password: string): boolean</code></td>
-<td>Permet d'authentifier l'utilisateur. Stocke l'utilisateur dans le 
-<code>localStorage</code>
- et émet un événement sur le flux 
-<code>onSignin</code>
-.</td>
-</tr>
-<tr>
-<td><code>logout()</code></td>
-<td>Supprimer les infos stocker dans le 
-<code>localStorage</code>
- et émet un événement sur le flux onLogout.</td>
-</tr>
-<tr>
-<td><code>getUser()</code></td>
-<td>Retourne l'utilisateur connecté et stocké dans le localStorage.</td>
-</tr>
-<tr>
-<td><code>get onSignin(): EventEmitter&#x3C;User></code></td>
-<td>Retourne l'objet (ou flux) 
-<code>EventEmmiter</code>
- dédié à l'événement onSignin.</td>
-</tr>
-<tr>
-<td><code>get onLogout(): EventEmitter&#x3C;boolean></code></td>
-<td>Retourne l'objet (ou flux) 
-<code>EventEmmiter</code>
- dédié à l'événement onLogout.</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>Nous utiliserons la class EventEmitter pour permettre à des composants de s'abonner à des événements.</p>
-</blockquote>
-<h4>Utilisation du localStorage</h4>
-<pre><code class="typescript">// setter
-localStorage.setItem("currentUsers", JSON.stringify({firstName: "John"}));
-// getter
-const user = JSON.parse(localStorage.getItem("currentUsers"));
+<p>Ensuite, créez le fichier <code>users.interface.ts</code> ainsi que la fichier <code>users.fake.service.ts</code>.
+Et enfin implémentez la méthode <code>getUsers()</code> (les autres méthodes seront développés plus tard).</p>
+<p>La méthode <code>FakeUsersService.getUsers()</code> devra retourner les données suivantes :</p>
+<pre><code class="json">[
+    {"id": 1, "email": "john.doe@gmail.com", "password": "12345", "status": "online"},
+    {"id": 2, "email": "jane.doe@gmail.com", "password": "12345", "status": "online"},
+    {"id": 3, "email": "jean.dupond@gmail.com", "password": "12345", "status": "busy"},
+    {"id": 4, "email": "jean.dupont@gmail.com", "password": "12345", "status": "offline"},
+    {"id": 5, "email": "jeanne.dupond@gmail.com", "password": "12345", "status": "offline"},
+    {"id": 6, "email": "joe.doe@gmail.com", "password": "12345", "status": "online"}
+]
 </code></pre>
-<h3>La page d'accueil (fin)</h3>
-<p>Maintenant que vous avez un service AuthenticateService de prêt, vous pouvez gérer les règles d'affichage de cette page !</p>
-<h3>Page d'inscription</h3>
-<p>Le formulaire d'inscription présentera les éléments suivants :</p>
-<ul>
-<li>Prénom, qui est un champ obligatoire, </li>
-<li>Nom, qui est un champ obligatoire, </li>
-<li>Un champ e-mail, qui est un champ obligatoire et doit respecter le pattern e-mail,</li>
-<li>Un champ mot de passe, qui est un champ obligatoire,</li>
-<li>Un bouton de enregistrer, actif que si toutes les données saisies sont valides,</li>
-</ul>
-<p>Ensuite rajouter les fonctions permettant d'ajouter un utilisateur dans liste d'utilisateurs du service <code>UserService</code>.</p>
-<h3>La navbar (bonus)</h3>
-<p>Une application est toujours plus belle lorsque cette dernière possède une <code>navbar</code>.</p>
-<p>Cette navbar devra s'afficher sur l'ensemble des pages. Elle devra afficher les liens suivants :</p>
-<ul>
-<li>Home,</li>
-<li>Signin lorsque aucun utilisateur n'est authentifié,</li>
-<li>Signout lorsqu'un utilisateur est authentifié.</li>
-</ul>
-<p>Pour vous aider, vous pouvez utiliser la librairie Material <a href="http://material.angular.io">http://material.angular.io</a>.</p>
+<p>Une fois votre service fake implémenté, n'oubliez pas de l'ajouter à la liste des providers de votre module. </p>
 <blockquote>
-<p>Correction du TP : <a href="../../Resources/tp4-solution.zip">tp4-solution</a></p>
+<p>Aidez-vous du cours pour savoir comment ajouter un service mocké dans un module Angular.</p>
 </blockquote>
-<p><a href="tp5-webservice.html">Suivant</a></p>
+<p>Pour terminer, appelez la méthode getUser() dans le composant AppComponent et vérifiez que cela fonctionne.</p>
+<h2>Le composant tableau des utilisateurs</h2>
+<p>Nous allons maintenant créer un composant qui va afficher la liste des utilisateurs sous forme de tableau.
+Commencez par créer le composant <code>UsersTable</code> avec la commande suivante :</p>
+<pre><code class="bash">ng g component user-table
+</code></pre>
+<p>Voici ce qui est attendu du composant, nous devons pouvoir l'utiliser de la façon suivante :</p>
+<pre><code class="html">&#x3C;app-users-table [users]="users">&#x3C;/app-users-table>
+</code></pre>
+<h3>Exercice 1</h3>
+<p>Avec ce que vous avez vue en cours sur les données d'entrées d'un composant avec <code>@Input()</code>, essayez d'afficher la liste des utilisateurs
+au format json dans le contenu du composant UsersTable dans un premier temps.</p>
+<h3>Exercice 2</h3>
+<p>Maintenant que vous avez les données construisez votre composant. Voici un exemple du tableau attendu :</p>
+<p><img src="images/users-table.png" alt="max-300"> </p>
+<p>La feuille de style pour vous aider :</p>
+<pre><code class="css">table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table {
+    width: 100%;
+    display: table;
+}
+
+thead {
+    border-bottom: 1px solid #d0d0d0;
+}
+
+th {
+    padding: 15px 5px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+</code></pre>
+<p>Vous devez donc compléter la feuille de style afin d'afficher :</p>
+<ul>
+<li>Les lignes pairs en fonds gris clair,</li>
+<li>Le texte <code>online</code> en vert,</li>
+<li>Le texte <code>offline</code> en gris clair,</li>
+<li>Le texte <code>busy</code> en rouge.</li>
+</ul>
+<p>Ensuite utilisez les intructions vue en cours pour afficher la liste des utilisateurs dans votre tableau.</p>
+<p>Enfin, ajoutez une checkbox (md-checkbox) permettant d'afficher soit les utilisateurs en ligne,
+soit tous les utilisateurs.</p>
+<h2>Communication entres composants</h2>
+<p>Notre tableau affiche désormais les données. Nous allons maintenant utiliser l'annotation <code>@Output</code> pour émettre
+un événement lorsque l'utilisateur clique sur le bouton correspondant à la ligne de l'utilisateur.
+Cet événement sera remonté vers le composant <code>AppComponent</code>.</p>
+<p>Une fois l'information de l'utilisateur remonté dans <code>AppComponent</code>, vous devrez afficher les informations de l'utilisateur
+dans une boite de dialogue (soit via une alert ou en utilisant la librairie <a href="https://material.angular.io/components/component/dialog">Material design</a>).</p>
+<p><img src="images/user-table-and-popin.png" alt="max-300"> </p>
+<h2>Conclusion</h2>
+<p>Ce TP vous aura appris à :</p>
+<ul>
+<li>Utiliser les directives intégrées à Angular (<em>ngIf, </em>ngFor),</li>
+<li>Créer un service Angular et l'injecter dans un composant,</li>
+<li>Créer des composants avec une relation parent-enfant,</li>
+<li>Créer et utiliser un template,</li>
+<li>Communiquer entres les composants.</li>
+</ul>
+<blockquote>
+<p>Correction du TP : <a href="resources/tp3-solution.zip">tp3-solution</a></p>
+</blockquote>
+<p><a href="tp4-formulaires-routes.html">Suivant</a></p>
 
     </article>
 </div>
