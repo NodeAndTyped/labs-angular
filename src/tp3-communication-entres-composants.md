@@ -108,7 +108,6 @@ Maintenant que vous avez les données construisez votre composant. Voici un exem
 
 La feuille de style pour vous aider :
 ```css
-
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -162,7 +161,7 @@ dans une boite de dialogue (soit via une alert ou en utilisant la librairie [Mat
 Ce TP vous aura appris à :
 
 * Utiliser les directives intégrées à Angular (*ngIf, *ngFor),
-* Créer un service Angular et l'injecter dans un composant,
+* Créer un service Angular mocké et l'injecter dans un composant,
 * Créer des composants avec une relation parent-enfant,
 * Créer et utiliser un template,
 * Communiquer entres les composants.
