@@ -71,6 +71,24 @@ Voici un exemple du formulaire attendu en Material :
 
 ![max-300](images/login.png) 
 
+Pour vous aider voici un exemple de formulaire : 
+
+```html
+<form #myForm="ngForm">
+
+  isValid : {{myForm.valid}}
+  isInvalid : {{myForm.invalid}}
+  isHasError : {{myForm.hasError()}}
+
+  <input name="email" ngModel #email="ngModel" required>
+
+  Email is valid : {{email.valid}}
+  Email required error : {{email.hasError('required')}}
+
+</form>
+
+```
+
 
 ### Le service Authenticate
 
