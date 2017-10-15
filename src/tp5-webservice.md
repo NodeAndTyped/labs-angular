@@ -86,6 +86,7 @@ Voici la liste des webservices :
 │ POST   │ /api/users/authenticate   │ UserCtrl.authenticate() │
 └────────┴───────────────────────────┴─────────────────────────┘
 ```
+> Une documentation swagger est disponible à l'adresse `http://localhost:8080/api-docs`.
 
 Avec les informations dont vous disposez concernant les webservices, vous pouvez integrer 
 ces services dans votre application.
@@ -93,17 +94,7 @@ ces services dans votre application.
 Commencez par integrer le service retournant la liste des utilisateurs !
 Ensuite vous pouvez intégrer tous les autres services sauf la suppression (en bonus).
 
-**Note :** Dans ce TP, vous n'avez pas pour obligation d'utiliser l'API reactive avec le module Http.
- Vous pouvez directement transformer l'objet Observable retourner par Http en Promise comme suivant :
- 
-```typescript
-import 'rxjs/add/operator/toPromise';
-
-http.get(`/api/users`).toPromise(); // => Promise 
-```
-
 > Correction du TP : #resources-tp5-solution
-
 
 [Suivant](tp6-programmation-reactive-websocket.md)
 

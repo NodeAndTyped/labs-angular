@@ -206,10 +206,10 @@ export class User extends UserCredential {
 }
 
 export interface IUsersService {
-    getUsers(): Promise&#x3C;User[]>;
-    create(user: User): Promise&#x3C;User>;
-    exists(email: string): Promise&#x3C;boolean>;
-    get(email: string): Promise&#x3C;User>;
+    getUsers(): Observable&#x3C;User[]>;
+    create(user: User): Observable&#x3C;User>;
+    exists(email: string): Observable&#x3C;boolean>;
+    get(email: string): Observable&#x3C;User>;
 }
 </code></pre>
 <p>Commencez par créer le UsersService avec @angular/cli :</p>
@@ -290,7 +290,7 @@ dans une boite de dialogue (soit via une alert ou en utilisant la librairie <a h
 <p>Ce TP vous aura appris à :</p>
 <ul>
 <li>Utiliser les directives intégrées à Angular (<em>ngIf, </em>ngFor),</li>
-<li>Créer un service Angular et l'injecter dans un composant,</li>
+<li>Créer un service Angular mocké et l'injecter dans un composant,</li>
 <li>Créer des composants avec une relation parent-enfant,</li>
 <li>Créer et utiliser un template,</li>
 <li>Communiquer entres les composants.</li>

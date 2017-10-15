@@ -170,17 +170,17 @@
 <p>Nous verrons au cours des travaux pratiques les points suivants :</p>
 <ul class="page-summary">
     
-        <li><a href="#tp1installation">TP 1 - Installation</a></li>
+        <li><a href="#tp1installation">TP 1 - Installation,</a></li>
     
-        <li><a href="#tp2lecomposantchronometre">TP 2 - Le composant Chronomètre</a></li>
+        <li><a href="#tp2lecomposantchronometre">TP 2 - Le composant Chronomètre,</a></li>
     
-        <li><a href="#tp3communicationentrescomposants">TP 3 - Communication entres composants</a></li>
+        <li><a href="#tp3communicationentrescomposants">TP 3 - Communication entres composants,</a></li>
     
-        <li><a href="#tp4formulairesetroutes">TP 4 - Formulaires et routes</a></li>
+        <li><a href="#tp4formulairesetroutes">TP 4 - Formulaires et routes,</a></li>
     
-        <li><a href="#tp5integrationdeswebservices">TP 5 - Intégration des webservices</a></li>
+        <li><a href="#tp5integrationdeswebservices">TP 5 - Intégration des webservices,</a></li>
     
-        <li><a href="#tp6programmationreactiveetwebsocket">TP 6 - Programmation reactive et websocket</a></li>
+        <li><a href="#tp6programmationreactiveetwebsocket">TP 6 - Programmation reactive et websocket.</a></li>
     
 </ul>
 
@@ -502,10 +502,10 @@ export class User extends UserCredential {
 }
 
 export interface IUsersService {
-    getUsers(): Promise&#x3C;User[]>;
-    create(user: User): Promise&#x3C;User>;
-    exists(email: string): Promise&#x3C;boolean>;
-    get(email: string): Promise&#x3C;User>;
+    getUsers(): Observable&#x3C;User[]>;
+    create(user: User): Observable&#x3C;User>;
+    exists(email: string): Observable&#x3C;boolean>;
+    get(email: string): Observable&#x3C;User>;
 }
 </code></pre>
 <p>Commencez par créer le UsersService avec @angular/cli :</p>
@@ -586,7 +586,7 @@ dans une boite de dialogue (soit via une alert ou en utilisant la librairie <a h
 <p>Ce TP vous aura appris à :</p>
 <ul>
 <li>Utiliser les directives intégrées à Angular (<em>ngIf, </em>ngFor),</li>
-<li>Créer un service Angular et l'injecter dans un composant,</li>
+<li>Créer un service Angular mocké et l'injecter dans un composant,</li>
 <li>Créer des composants avec une relation parent-enfant,</li>
 <li>Créer et utiliser un template,</li>
 <li>Communiquer entres les composants.</li>
@@ -825,16 +825,13 @@ Créez un nouveau fichier <code>proxy.conf.json</code> et copiez la configuratio
 │ POST   │ /api/users/authenticate   │ UserCtrl.authenticate() │
 └────────┴───────────────────────────┴─────────────────────────┘
 </code></pre>
+<blockquote>
+<p>Une documentation swagger est disponible à l'adresse <code>http://localhost:8080/api-docs</code>.</p>
+</blockquote>
 <p>Avec les informations dont vous disposez concernant les webservices, vous pouvez integrer
 ces services dans votre application.</p>
 <p>Commencez par integrer le service retournant la liste des utilisateurs !
 Ensuite vous pouvez intégrer tous les autres services sauf la suppression (en bonus).</p>
-<p><strong>Note :</strong> Dans ce TP, vous n'avez pas pour obligation d'utiliser l'API reactive avec le module Http.
-Vous pouvez directement transformer l'objet Observable retourner par Http en Promise comme suivant :</p>
-<pre><code class="typescript">import 'rxjs/add/operator/toPromise';
-
-http.get(`/api/users`).toPromise(); // => Promise 
-</code></pre>
 <blockquote>
 <p>Correction du TP : <a href="../../Resources/tp5-solution.zip">tp5-solution</a></p>
 </blockquote>
