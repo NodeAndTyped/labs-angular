@@ -4,10 +4,14 @@ import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import "hammerjs";
 import {AppComponent} from "./app.component";
+import {ChronoComponent} from "./chrono/chrono.component";
+import {DecToStrPipe} from "./chrono/dec-to-str.pipe";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        ChronoComponent,
+        DecToStrPipe
     ],
     imports: [
         BrowserModule,
