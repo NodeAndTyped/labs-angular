@@ -1,11 +1,11 @@
-<md-card>
+<mat-card>
 
-    <md-card-content>
+    <mat-card-content>
 
         <div>
-            <md-checkbox (click)="toggleStatus()">
+            <mat-checkbox (click)="toggleStatus()">
                 Online only
-            </md-checkbox>
+            </mat-checkbox>
         </div>
 
         <table>
@@ -26,8 +26,8 @@
                         {{user.status}}
                     </td>
                     <td>
-                        <button md-mini-fab (click)="onClickUser(user)">
-                            <md-icon>search</md-icon>
+                        <button mat-mini-fab (click)="onClickUser(user)">
+                            <mat-icon>search</mat-icon>
                         </button>
                     </td>
                 </tr>
@@ -37,5 +37,5 @@
 
         </table>
 
-    </md-card-content>
-</md-card>
+    </mat-card-content>
+</mat-card>
