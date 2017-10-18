@@ -3,11 +3,11 @@
         {{minutes | decToStr}}:{{seconds | decToStr}},{{milliseconds | decToStr}}
     </div>
 
-    <button md-raised-button (click)="reset()">
+    <button mat-raised-button (click)="reset()">
       reset
     </button>
 
-    <button [ngClass]="{started: isStarted, stopped: !isStarted}" md-raised-button (click)="toggle()">
+    <button [ngClass]="{started: isStarted, stopped: !isStarted}" mat-raised-button (click)="toggle()">
         {{!isStarted ? 'start' : 'stop'}}
     </button>
 
