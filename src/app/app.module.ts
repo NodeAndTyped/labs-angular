@@ -9,12 +9,19 @@ import {
 } from "@angular/material";
 import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterModule} from "@angular/router";
 import "hammerjs";
+import {AdminViewComponent} from "./admin-view/admin-view.component";
 import {AppComponent} from "./app.component";
+import {ROUTES} from "./app.routes";
 import {ChronoComponent} from "./chrono/chrono.component";
 import {DecToStrPipe} from "./chrono/dec-to-str.pipe";
+import {HomeViewComponent} from "./home-view/home-view.component";
+import {LoginViewComponent} from "./login-view/login-view.component";
+import {NavbarComponent} from "./navbar/navbar.component";
 import {UsersFakeService} from "./services/users.fake.service";
 import {UsersService} from "./services/users.service";
+import {SignupViewComponent} from "./signup-view/signup-view.component";
 import {UserDialogComponent} from "./user-dialog/user-dialog.component";
 import {UsersOnlinePipe} from "./users-table/users-online.pipe";
 import {UsersTableComponent} from "./users-table/users-table.component";
@@ -26,7 +33,12 @@ import {UsersTableComponent} from "./users-table/users-table.component";
         DecToStrPipe,
         UsersTableComponent,
         UsersOnlinePipe,
-        UserDialogComponent
+        UserDialogComponent,
+        HomeViewComponent,
+        AdminViewComponent,
+        LoginViewComponent,
+        SignupViewComponent,
+        NavbarComponent
     ],
     imports: [
         BrowserModule,
@@ -36,7 +48,8 @@ import {UsersTableComponent} from "./users-table/users-table.component";
         MatInputModule,
         MatCardModule,
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        RouterModule.forRoot(ROUTES)
     ],
     providers: [{provide: UsersService, useClass: UsersFakeService}],
     bootstrap: [AppComponent],
