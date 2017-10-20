@@ -1,12 +1,11 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+    <h1>
+        Welcome to {{title}}!
+    </h1>
 
-<h1>
-  {{title}}
-</h1>
+    <chrono></chrono>
 
-<div class="container">
-    <app-users-table [users]="users" (clickUser)="onClickUser($event)">
-
-    </app-users-table>
 </div>
 
-
+<users-table (clickUser)="onClickUser($event)" [users]="observableUsers | async"></users-table>

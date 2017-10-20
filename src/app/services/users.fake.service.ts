@@ -1,19 +1,60 @@
-import {IUsersService, User} from "./users.interface";
+import {Injectable} from "@angular/core";
 
-export class FakeUsersService implements IUsersService {
+import "rxjs/add/observable/of";
+import {Observable} from "rxjs/Observable";
+import {IUsersService} from "./users.interface";
+import {User} from "../interfaces/user";
 
-    constructor() { }
+@Injectable()
+export class UsersFakeService implements IUsersService {
 
-    private users: User[] = <User[]>[
-        {id: 1, firstName: 'john', password: "12345",  lastName:'doe', email: 'john.doe@gmail.com', status: 'online'},
-        {id: 2, firstName: 'jane', password: "12345", lastName:'doe', email: 'jane.doe@gmail.com', status: 'online'},
-        {id: 3, firstName: 'jean', password: "12345", lastName:'dupond', email: 'jean.dupond@gmail.com', status: 'busy'},
-        {id: 4, firstName: 'jean', password: "12345", lastName:'dupont', email: 'jean.dupont@gmail.com', status: 'offline'},
-        {id: 5, firstName: 'jeanne', password: "12345", lastName:'dupong', email: 'jeanne.dupond@gmail.com', status: 'offline'},
-        {id: 6, firstName: 'john', password: "12345", lastName:'doe', email: 'joe.doe@gmail.com', status: 'online'}
+    private users: User[] = [
+        {id: 1, firstName: "john", password: "12345", lastName: "doe", email: "john.doe@gmail.com", status: "online"},
+        {id: 2, firstName: "jane", password: "12345", lastName: "doe", email: "jane.doe@gmail.com", status: "online"},
+        {
+            id: 3,
+            firstName: "jean",
+            password: "12345",
+            lastName: "dupond",
+            email: "jean.dupond@gmail.com",
+            status: "busy"
+        },
+        {
+            id: 4,
+            firstName: "jean",
+            password: "12345",
+            lastName: "dupont",
+            email: "jean.dupont@gmail.com",
+            status: "offline"
+        },
+        {
+            id: 5,
+            firstName: "jeanne",
+            password: "12345",
+            lastName: "dupong",
+            email: "jeanne.dupond@gmail.com",
+            status: "offline"
+        },
+        {id: 6, firstName: "john", password: "12345", lastName: "doe", email: "joe.doe@gmail.com", status: "online"}
     ];
 
-    getUsers(): Promise<User[]> {
-        return Promise.resolve(this.users);
+    constructor() {
+    }
+
+
+    getUsers(): Observable<User[]> {
+        return Observable.of(this.users);
+    }
+
+    create(user: User): Observable<User> {
+        return null;
+    }
+
+    exists(email: string): Observable<boolean> {
+        return null;
+    }
+
+    get(email: string): Observable<User> {
+        return null;
     }
 }

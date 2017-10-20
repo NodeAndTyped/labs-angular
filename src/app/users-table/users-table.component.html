@@ -10,27 +10,27 @@
 
         <table>
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                </tr>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
             </thead>
             <tbody>
 
-                <tr *ngFor="let user of users | usersOnline : hideOffline;">
+            <tr *ngFor="let user of users | usersOnline : hideOffline;">
 
-                    <td>{{user.id}}</td>
-                    <td>{{user.email}}</td>
-                    <td [ngClass]="{online: user.status === 'online', offline: user.status === 'offline', busy: user.status === 'busy'}">
-                        {{user.status}}
-                    </td>
-                    <td>
-                        <button mat-mini-fab (click)="onClickUser(user)">
-                            <mat-icon>search</mat-icon>
-                        </button>
-                    </td>
-                </tr>
+                <td>{{user.id}}</td>
+                <td>{{user.email}}</td>
+                <td [ngClass]="{online: user.status === 'online', offline: user.status === 'offline', busy: user.status === 'busy'}">
+                    {{user.status}}
+                </td>
+                <td>
+                    <button mat-mini-fab (click)="onClickUser(user)">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </td>
+            </tr>
 
 
             </tbody>

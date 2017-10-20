@@ -1,20 +1,12 @@
-export const Status: {[K in string]: K} = {
-    online: "online",
-    offline: "offline",
-    busy: "busy"
-};
-
-export type Status = keyof typeof Status;
-
-export class User {
-    id: number;
-    email: string;
-    password?: string;
-    firstName: string;
-    lastName: string;
-    status: Status;
-}
+import {Observable} from "rxjs/Observable";
+import {User} from "../interfaces/user";
 
 export interface IUsersService {
-    getUsers(): Promise<User[]>;
+    getUsers(): Observable<User[]>;
+
+    create(user: User): Observable<User>;
+
+    exists(email: string): Observable<boolean>;
+
+    get(email: string): Observable<User>;
 }

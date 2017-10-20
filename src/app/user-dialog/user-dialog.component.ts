@@ -1,20 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import {MdDialogRef} from "@angular/material";
-import {User} from "../services/users.interface";
+import {Component, Inject, OnInit} from "@angular/core";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {User} from "../interfaces/user";
 
 @Component({
-    selector: 'dialog-user',
-    templateUrl: 'user-dialog.component.html',
-    styleUrls: ['user-dialog.component.css']
+    selector: "app-user-dialog",
+    templateUrl: "./user-dialog.component.html",
+    styleUrls: ["./user-dialog.component.css"]
 })
 export class UserDialogComponent implements OnInit {
 
-    public user: User;
-
-    constructor(
-        public dialogRef: MdDialogRef<UserDialogComponent>
-    ) {
-        console.log(dialogRef.componentInstance);
+    constructor(public dialogRef: MatDialogRef<UserDialogComponent>,
+                @Inject(MAT_DIALOG_DATA) public user: User) {
     }
 
     ngOnInit() {

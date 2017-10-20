@@ -1,21 +1,22 @@
-import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core";
-import {User} from "../services/users.interface";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {User} from "../interfaces/user";
 
 @Component({
-    selector: "app-users-table",
+    selector: "users-table",
     templateUrl: "./users-table.component.html",
-    styleUrls: ["./users-table.component.css"],
+    styleUrls: ["./users-table.component.css"]
 })
 export class UsersTableComponent implements OnInit {
 
-    private hideOffline: boolean = false;
+    private _hideOffline: boolean = false;
 
     @Output()
     private clickUser = new EventEmitter<User>();
 
     private _users: User[];
 
-    constructor() { }
+    constructor() {
+    }
 
     /**
      *
@@ -28,17 +29,7 @@ export class UsersTableComponent implements OnInit {
      *
      */
     toggleStatus() {
-        this.hideOffline = !this.hideOffline;
-    }
-
-    @Input()
-    set users(users: User[]){
-        console.log("Table users =>", users);
-        this._users = users;
-    }
-
-    get users() {
-        return this._users;
+        this._hideOffline = !this._hideOffline;
     }
 
     /**
@@ -50,4 +41,21 @@ export class UsersTableComponent implements OnInit {
         this.clickUser.emit(user);
     }
 
+    @Input()
+    set users(users: User[]) {
+        console.log("Table users =>", users);
+        this._users = users;
+    }
+
+    get users() {
+        return this._users;
+    }
+
+    get hideOffline(): boolean {
+        return this._hideOffline;
+    }
+
+    set hideOffline(value: boolean) {
+        this._hideOffline = value;
+    }
 }
