@@ -219,12 +219,12 @@ export interface IUsersService {
 Et enfin implémentez la méthode <code>getUsers()</code> (les autres méthodes seront développés plus tard).</p>
 <p>La méthode <code>FakeUsersService.getUsers()</code> devra retourner les données suivantes :</p>
 <pre><code class="json">[
-    {"id": 1, "email": "john.doe@gmail.com", "password": "12345", "status": "online"},
-    {"id": 2, "email": "jane.doe@gmail.com", "password": "12345", "status": "online"},
-    {"id": 3, "email": "jean.dupond@gmail.com", "password": "12345", "status": "busy"},
-    {"id": 4, "email": "jean.dupont@gmail.com", "password": "12345", "status": "offline"},
-    {"id": 5, "email": "jeanne.dupond@gmail.com", "password": "12345", "status": "offline"},
-    {"id": 6, "email": "joe.doe@gmail.com", "password": "12345", "status": "online"}
+  {"id": 1, "firstName": "john", "password": "12345", "lastName": "doe", "email": "john.doe@gmail.com", "status": "online"},
+  {"id": 2, "firstName": "jane", "password": "12345", "lastName": "doe", "email": "jane.doe@gmail.com", "status": "online"},
+  {"id": 3, "firstName": "jean", "password": "12345", "lastName": "dupond", "email": "jean.dupond@gmail.com", "status": "busy"},
+  {"id": 4, "firstName": "jean", "password": "12345", "lastName": "dupont", "email": "jean.dupont@gmail.com", "status": "offline"},
+  {"id": 5, "firstName": "jeanne", "password": "12345", "lastName": "dupong", "email": "jeanne.dupond@gmail.com", "status": "offline"},
+  {"id": 6, "firstName": "john", "password": "12345", "lastName": "doe", "email": "joe.doe@gmail.com", "status": "online"}
 ]
 </code></pre>
 <p>Une fois votre service fake implémenté, n'oubliez pas de l'ajouter à la liste des providers de votre module. </p>
@@ -277,7 +277,7 @@ th {
 <li>Le texte <code>busy</code> en rouge.</li>
 </ul>
 <p>Ensuite utilisez les intructions vue en cours pour afficher la liste des utilisateurs dans votre tableau.</p>
-<p>Enfin, ajoutez une checkbox (md-checkbox) permettant d'afficher soit les utilisateurs en ligne,
+        <p>Enfin, ajoutez une checkbox (mat-checkbox) permettant d'afficher soit les utilisateurs en ligne,
 soit tous les utilisateurs.</p>
 <h2>Communication entres composants</h2>
 <p>Notre tableau affiche désormais les données. Nous allons maintenant utiliser l'annotation <code>@Output</code> pour émettre

@@ -66,12 +66,12 @@ La méthode `FakeUsersService.getUsers()` devra retourner les données suivantes
 
 ```json
 [
-    {"id": 1, "email": "john.doe@gmail.com", "password": "12345", "status": "online"},
-    {"id": 2, "email": "jane.doe@gmail.com", "password": "12345", "status": "online"},
-    {"id": 3, "email": "jean.dupond@gmail.com", "password": "12345", "status": "busy"},
-    {"id": 4, "email": "jean.dupont@gmail.com", "password": "12345", "status": "offline"},
-    {"id": 5, "email": "jeanne.dupond@gmail.com", "password": "12345", "status": "offline"},
-    {"id": 6, "email": "joe.doe@gmail.com", "password": "12345", "status": "online"}
+  {"id": 1, "firstName": "john", "password": "12345", "lastName": "doe", "email": "john.doe@gmail.com", "status": "online"},
+  {"id": 2, "firstName": "jane", "password": "12345", "lastName": "doe", "email": "jane.doe@gmail.com", "status": "online"},
+  {"id": 3, "firstName": "jean", "password": "12345", "lastName": "dupond", "email": "jean.dupond@gmail.com", "status": "busy"},
+  {"id": 4, "firstName": "jean", "password": "12345", "lastName": "dupont", "email": "jean.dupont@gmail.com", "status": "offline"},
+  {"id": 5, "firstName": "jeanne", "password": "12345", "lastName": "dupong", "email": "jeanne.dupond@gmail.com", "status": "offline"},
+  {"id": 6, "firstName": "john", "password": "12345", "lastName": "doe", "email": "joe.doe@gmail.com", "status": "online"}
 ]
 ```
 
@@ -140,7 +140,7 @@ Vous devez donc compléter la feuille de style afin d'afficher :
 
 Ensuite utilisez les intructions vue en cours pour afficher la liste des utilisateurs dans votre tableau.
 
-Enfin, ajoutez une checkbox (md-checkbox) permettant d'afficher soit les utilisateurs en ligne, 
+Enfin, ajoutez une checkbox (mat-checkbox) permettant d'afficher soit les utilisateurs en ligne, 
 soit tous les utilisateurs.
 
 

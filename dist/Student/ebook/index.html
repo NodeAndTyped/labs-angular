@@ -223,20 +223,26 @@ cd tp-angular
 <pre><code class="bash">ng serve
 </code></pre>
 <h2>Installation d'Angular Material</h2>
-<p>Nous allons utiliser Angular material pour créer les interfaces de nos applications.</p>
+        <p>Nous allons utiliser <a href="https://material.angular.io/guide/getting-started">Angular material</a> pour
+            créer les interfaces de nos applications.</p>
 <p>Lancer la commande suivante:</p>
-<pre><code class="bash">npm install --save @angular/material
-npm install --save @angular/animations
+        <pre><code class="bash">npm install --save @angular/material @angular/cdk @angular/animations hammerjs
 </code></pre>
 <p>Puis rajouter dans le fichier <code>app.module.ts</code> la dépendence du module comme suivant :</p>
 <pre><code class="typescript">import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
+import { MatButtonModule, MatButtonModule, MatCardModule, MatInputModule, MatDialogModule } from '@angular/material';
+
+import "hammerjs";
 // other imports 
 @NgModule({
   ...  
   imports: [
       BrowserAnimationsModule, 
-      MaterialModule
+      MatButtonModule,
+      MatCheckboxModule,
+      MatCardModule,
+      MatInputModule,
+      MatDialogModule
   ],
   ...
 })
@@ -247,7 +253,7 @@ les icônes de la librairie Material :</p>
 <pre><code class="html">&#x3C;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </code></pre>
 <p>Enfin dans le <code>styles.css</code>, ajouter le thème :</p>
-<pre><code class="css">@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+        <pre><code class="css">@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
     padding: 0;
@@ -386,7 +392,7 @@ export class AppModule { }
 <p>Vous pouvez utiliser <code>@angular/material</code> pour créer un bouton et votre composant comme suivant :</p>
 <pre><code class="html">&#x3C;div>
     &#x3C;span class="times">0&#x3C;/span>
-    &#x3C;button md-raised-button>Start&#x3C;/button>
+    &#x3C;button mat-raised-button>Start&#x3C;/button>
 &#x3C;/div>
 </code></pre>
 <p>Pour le css :</p>
@@ -515,12 +521,12 @@ export interface IUsersService {
 Et enfin implémentez la méthode <code>getUsers()</code> (les autres méthodes seront développés plus tard).</p>
 <p>La méthode <code>FakeUsersService.getUsers()</code> devra retourner les données suivantes :</p>
 <pre><code class="json">[
-    {"id": 1, "email": "john.doe@gmail.com", "password": "12345", "status": "online"},
-    {"id": 2, "email": "jane.doe@gmail.com", "password": "12345", "status": "online"},
-    {"id": 3, "email": "jean.dupond@gmail.com", "password": "12345", "status": "busy"},
-    {"id": 4, "email": "jean.dupont@gmail.com", "password": "12345", "status": "offline"},
-    {"id": 5, "email": "jeanne.dupond@gmail.com", "password": "12345", "status": "offline"},
-    {"id": 6, "email": "joe.doe@gmail.com", "password": "12345", "status": "online"}
+  {"id": 1, "firstName": "john", "password": "12345", "lastName": "doe", "email": "john.doe@gmail.com", "status": "online"},
+  {"id": 2, "firstName": "jane", "password": "12345", "lastName": "doe", "email": "jane.doe@gmail.com", "status": "online"},
+  {"id": 3, "firstName": "jean", "password": "12345", "lastName": "dupond", "email": "jean.dupond@gmail.com", "status": "busy"},
+  {"id": 4, "firstName": "jean", "password": "12345", "lastName": "dupont", "email": "jean.dupont@gmail.com", "status": "offline"},
+  {"id": 5, "firstName": "jeanne", "password": "12345", "lastName": "dupong", "email": "jeanne.dupond@gmail.com", "status": "offline"},
+  {"id": 6, "firstName": "john", "password": "12345", "lastName": "doe", "email": "joe.doe@gmail.com", "status": "online"}
 ]
 </code></pre>
 <p>Une fois votre service fake implémenté, n'oubliez pas de l'ajouter à la liste des providers de votre module. </p>
@@ -573,7 +579,7 @@ th {
 <li>Le texte <code>busy</code> en rouge.</li>
 </ul>
 <p>Ensuite utilisez les intructions vue en cours pour afficher la liste des utilisateurs dans votre tableau.</p>
-<p>Enfin, ajoutez une checkbox (md-checkbox) permettant d'afficher soit les utilisateurs en ligne,
+        <p>Enfin, ajoutez une checkbox (mat-checkbox) permettant d'afficher soit les utilisateurs en ligne,
 soit tous les utilisateurs.</p>
 <h2>Communication entres composants</h2>
 <p>Notre tableau affiche désormais les données. Nous allons maintenant utiliser l'annotation <code>@Output</code> pour émettre
@@ -675,6 +681,20 @@ mais vous êtes libre d'utiliser la seconde approche.</p>
 <p>N'oubliez pas d'afficher les messages en fonction du type d'erreur du champs associé.</p>
 <p>Voici un exemple du formulaire attendu en Material :</p>
 <p><img src="images/login.png" alt="max-300"> </p>
+        <p>Pour vous aider voici un exemple de formulaire : </p>
+        <pre><code class="html">&#x3C;form #myForm="ngForm">
+
+  isValid : {{myForm.valid}}
+  isInvalid : {{myForm.invalid}}
+  isHasError : {{myForm.hasError()}}
+
+  &#x3C;input name="email" ngModel #email="ngModel" required>
+
+  Email is valid : {{email.valid}}
+  Email required error : {{email.hasError('required')}}
+
+&#x3C;/form>
+</code></pre>
 <h3>Le service Authenticate</h3>
 <p>Une fois le formulaire réalisé, vous devrez créer le service <code>AuthenticateService</code> (<code>ng g service authenticate</code>) qui aura pour fonction d'authentifier
 l'utilisateur.</p>

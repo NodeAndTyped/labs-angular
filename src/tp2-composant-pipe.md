@@ -83,7 +83,7 @@ Vous pouvez utiliser `@angular/material` pour créer un bouton et votre composan
 ```html
 <div>
     <span class="times">0</span>
-    <button md-raised-button>Start</button>
+    <button mat-raised-button>Start</button>
 </div>
 ```
 

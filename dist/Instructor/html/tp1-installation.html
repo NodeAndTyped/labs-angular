@@ -191,20 +191,26 @@ cd tp-angular
 <pre><code class="bash">ng serve
 </code></pre>
 <h2>Installation d'Angular Material</h2>
-<p>Nous allons utiliser Angular material pour créer les interfaces de nos applications.</p>
+        <p>Nous allons utiliser <a href="https://material.angular.io/guide/getting-started">Angular material</a> pour
+            créer les interfaces de nos applications.</p>
 <p>Lancer la commande suivante:</p>
-<pre><code class="bash">npm install --save @angular/material
-npm install --save @angular/animations
+        <pre><code class="bash">npm install --save @angular/material @angular/cdk @angular/animations hammerjs
 </code></pre>
 <p>Puis rajouter dans le fichier <code>app.module.ts</code> la dépendence du module comme suivant :</p>
 <pre><code class="typescript">import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
+import { MatButtonModule, MatButtonModule, MatCardModule, MatInputModule, MatDialogModule } from '@angular/material';
+
+import "hammerjs";
 // other imports 
 @NgModule({
   ...  
   imports: [
       BrowserAnimationsModule, 
-      MaterialModule
+      MatButtonModule,
+      MatCheckboxModule,
+      MatCardModule,
+      MatInputModule,
+      MatDialogModule
   ],
   ...
 })
@@ -215,7 +221,7 @@ les icônes de la librairie Material :</p>
 <pre><code class="html">&#x3C;link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </code></pre>
 <p>Enfin dans le <code>styles.css</code>, ajouter le thème :</p>
-<pre><code class="css">@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+        <pre><code class="css">@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
     padding: 0;

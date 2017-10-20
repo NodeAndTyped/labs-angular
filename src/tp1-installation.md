@@ -31,25 +31,30 @@ ng serve
 
 ## Installation d'Angular Material
 
-Nous allons utiliser Angular material pour créer les interfaces de nos applications.
+Nous allons utiliser [Angular material](https://material.angular.io/guide/getting-started) pour créer les interfaces de nos applications.
 
 Lancer la commande suivante:
 ```bash
-npm install --save @angular/material
-npm install --save @angular/animations
+npm install --save @angular/material @angular/cdk @angular/animations hammerjs
 ```
 
 Puis rajouter dans le fichier `app.module.ts` la dépendence du module comme suivant :
 
 ```typescript
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from '@angular/material';
+import { MatButtonModule, MatButtonModule, MatCardModule, MatInputModule, MatDialogModule } from '@angular/material';
+
+import "hammerjs";
 // other imports 
 @NgModule({
   ...  
   imports: [
       BrowserAnimationsModule, 
-      MaterialModule
+      MatButtonModule,
+      MatCheckboxModule,
+      MatCardModule,
+      MatInputModule,
+      MatDialogModule
   ],
   ...
 })
@@ -66,7 +71,7 @@ les icônes de la librairie Material :
 Enfin dans le `styles.css`, ajouter le thème :
 
 ```css
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
     padding: 0;
@@ -74,7 +79,6 @@ body {
     font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 ```
-
 
 ## Générer des Composants, Directives, Pipe, etc...
 
