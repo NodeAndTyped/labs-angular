@@ -1,6 +1,6 @@
 # Labs Angular
 
-Voir l'ensemble du cours sur [http://NodeAndTyped.github.io/labs-angular](http://NodeAndTyped.github.io/labs-angular).
+Voir l'ensemble du cours sur [http://NodeLabs.github.io/labs-angular](http://NodeLabs.github.io/labs-angular).
 
 # Mise à jour du contenu
 
